@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Frame = BowlingApp.Models.Frame;
@@ -48,6 +49,15 @@ namespace BowlingApp
             }
         }
 
+        private ICommand _LoadRollsCommand;
+        public ICommand LoadRollsCommand
+        {
+            get
+            {
+                return _LoadRollsCommand ?? (_LoadRollsCommand = new CommandHandler(() => LoadRolls(), () => true));
+            }
+        }
+
         private ICommand _ResetCommand;
         public ICommand ResetCommand
         {
@@ -59,6 +69,12 @@ namespace BowlingApp
         #endregion
 
 
+        public void LoadRolls()
+        {
+            MessageBox.Show("Loading Rolls");
+            game.Reset();
+            game.RollMany(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 });
+        }
 
         public void Reset()
         {
@@ -76,6 +92,11 @@ namespace BowlingApp
         public void Roll()
         {
             game.Roll();
+        }
+
+        public void Roll(int roll)
+        {
+            game.Roll(roll);
         }
 
         public int CurrentRollIndex
@@ -99,6 +120,14 @@ namespace BowlingApp
             get
             {
                 return game.Score;
+            }
+        }
+
+        public int[] Rolls
+        {
+            get
+            {
+                return game.Rolls;
             }
         }
 
@@ -128,12 +157,16 @@ namespace BowlingApp
             {
                 FrameVM frameVM = FrameVMs[frameIndex];
                 frameVM.Rolls.Clear();
-                Frame frame = game.GetFrame(frameIndex);
-                foreach(int roll in frame.Rolls)
+                Frame frame = game.Frames[frameIndex];
+                foreach(int rollIndex in frame.RollIndexes)
                 {
+                    int roll = game.Rolls[rollIndex];
                     frameVM.Rolls.Add(roll);
                 }
-                frameVM.ScoreSlotTotal = frame.Score.ToString();               
+
+                int frameScore = game.GetScore(frameIndex);
+
+                frameVM.ScoreSlotTotal = frameScore.ToString();               
             }
         }
 

@@ -10,6 +10,7 @@
 
         <Button Command="{Binding RollCommand}">Roll</Button>
         <Button Command="{Binding ResetCommand}">Reset</Button>
+        <Button Click="showLoadRollsDialog_Click">Load Rolls</Button>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding FrameVMs}">
                 <ItemsControl.ItemTemplate>

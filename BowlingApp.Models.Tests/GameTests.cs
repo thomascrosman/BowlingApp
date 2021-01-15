@@ -127,44 +127,44 @@ namespace BowlingApp.Models.Tests
         }
         #endregion
         #region GetFrame
-        [Fact]
-        public void TestGetFrame_FirstFrame()
-        {          
-            repeatRolls(12, 10);
+        //[Fact]
+        //public void TestGetFrame_FirstFrame()
+        //{          
+        //    repeatRolls(12, 10);
 
-            Frame frameTest = new Frame() { Rolls = new int[] { 10}, Score = 30 };
-            Frame frame = game.GetFrame(0);
+        //    Frame frameTest = new Frame() { Rolls = new int[] { 10}, Score = 30 };
+        //    Frame frame = game.GetFrame(0);
 
-            string frameTestJson = JsonConvert.SerializeObject(frameTest);
-            string frameJson = JsonConvert.SerializeObject(frame);
-            Assert.Equal(frameTestJson, frameJson);
-        }
+        //    string frameTestJson = JsonConvert.SerializeObject(frameTest);
+        //    string frameJson = JsonConvert.SerializeObject(frame);
+        //    Assert.Equal(frameTestJson, frameJson);
+        //}
 
-        [Fact]
-        public void TestGetFrame_FifthFrame()
-        {
-            repeatRolls(12, 10);
+        //[Fact]
+        //public void TestGetFrame_FifthFrame()
+        //{
+        //    repeatRolls(12, 10);
 
-            Frame frameTest = new Frame() { Rolls = new int[] { 10 }, Score = 150 };
-            Frame frame = game.GetFrame(4);
+        //    Frame frameTest = new Frame() { Rolls = new int[] { 10 }, Score = 150 };
+        //    Frame frame = game.GetFrame(4);
 
-            string frameTestJson = JsonConvert.SerializeObject(frameTest);
-            string frameJson = JsonConvert.SerializeObject(frame);
-            Assert.Equal(frameTestJson, frameJson);
-        }
+        //    string frameTestJson = JsonConvert.SerializeObject(frameTest);
+        //    string frameJson = JsonConvert.SerializeObject(frame);
+        //    Assert.Equal(frameTestJson, frameJson);
+        //}
 
-        [Fact]
-        public void TestGetFrame_LastFrame()
-        {
-            repeatRolls(12, 10);
+        //[Fact]
+        //public void TestGetFrame_LastFrame()
+        //{
+        //    repeatRolls(12, 10);
 
-            Frame frameTest = new Frame() { Rolls = new int[] { 10, 10, 10 }, Score = 300 };
-            Frame frame = game.GetFrame(9);
+        //    Frame frameTest = new Frame() { Rolls = new int[] { 10, 10, 10 }, Score = 300 };
+        //    Frame frame = game.GetFrame(9);
 
-            string frameTestJson = JsonConvert.SerializeObject(frameTest);
-            string frameJson = JsonConvert.SerializeObject(frame);
-            Assert.Equal(frameTestJson, frameJson);
-        }
+        //    string frameTestJson = JsonConvert.SerializeObject(frameTest);
+        //    string frameJson = JsonConvert.SerializeObject(frame);
+        //    Assert.Equal(frameTestJson, frameJson);
+        //}
         #endregion
         #region GetIsGameOver
         [Fact]

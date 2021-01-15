@@ -10,6 +10,8 @@ namespace BowlingApp.Models
     {
         #region Properties
         public int[] Rolls { get; set; } = new int[21];
+        public Frame[] Frames = new Frame[10].Select(f => new Frame()).ToArray();
+
 
         private int _CurrentRollIndex = 0;
         public int CurrentRollIndex {
@@ -72,6 +74,7 @@ namespace BowlingApp.Models
         public void Reset()
         {
             Rolls = new int[21];
+            Frames = new Frame[10].Select(f => new Frame()).ToArray();
             CurrentRollIndex = 0;
             CurrentFrameIndex = 0;
             Score = 0;
@@ -82,52 +85,55 @@ namespace BowlingApp.Models
         {
             Random rnd = new Random();
 
-            Frame currentFrame = GetFrame(CurrentFrameIndex, false);
+            Frame currentFrame = Frames[CurrentFrameIndex];
 
             if (CurrentFrameIndex == 9)
             {
-                if (currentFrame.Rolls.Count() == 0)
+                if (currentFrame.RollIndexes.Count() == 0)
                 {
                     int pins = rnd.Next(0, 11);
                     Roll(pins);
                 }
-                else if (currentFrame.Rolls.Count() == 1)
+                else if (currentFrame.RollIndexes.Count() == 1)
                 {
-                    if (currentFrame.Rolls[0] == 10)
+                    int firstRoll = Rolls[currentFrame.RollIndexes[0]];
+                    if (firstRoll == 10)
                     {
                         int pins = rnd.Next(0, 11);
                         Roll(pins);
                     }
                     else
                     {
-                        int pins = rnd.Next(0, 11 - currentFrame.Rolls[0]);
+                        int pins = rnd.Next(0, 11 - firstRoll);
                         Roll(pins);
                     }
                 }
                 else
                 {
-                    if (currentFrame.Rolls[1] == 10)
+                    int secondRoll = Rolls[currentFrame.RollIndexes[1]];
+                    if (secondRoll == 10)
                     {
                         int pins = rnd.Next(0, 11);
                         Roll(pins);
                     }
                     else
                     {
-                        int pins = rnd.Next(0, 11 - currentFrame.Rolls[1]);
+                        int pins = rnd.Next(0, 11 - secondRoll);
                         Roll(pins);
                     }
                 }
             }
             else
             {
-                if (currentFrame.Rolls.Count() == 0)
+                if (currentFrame.RollIndexes.Count() == 0)
                 {
                     int pins = rnd.Next(0, 11);
                     Roll(pins);
                 }
                 else
                 {
-                    int pins = rnd.Next(0, 11 - currentFrame.Rolls[0]);
+                    int firstRoll = Rolls[currentFrame.RollIndexes[0]];
+                    int pins = rnd.Next(0, 11 - firstRoll);
                     Roll(pins);
                 }
             }
@@ -137,16 +143,18 @@ namespace BowlingApp.Models
         {
             if (CurrentFrameIndex == 9)
             {
-                Frame lastFrame = GetFrame(CurrentFrameIndex, false);
-                if (lastFrame.Rolls.Count() == 2)
+                Frame lastFrame = Frames[CurrentFrameIndex];
+                if (lastFrame.RollIndexes.Count() == 2)
                 {
-                    if (lastFrame.Rolls[0] == 10 || (lastFrame.Rolls[0] + lastFrame.Rolls[1]) == 10)
+                    int firstRoll = Rolls[lastFrame.RollIndexes[0]];
+                    int secondRoll = Rolls[lastFrame.RollIndexes[1]];
+                    if (firstRoll == 10 || (firstRoll + secondRoll == 10))
                     {
                         return false;
                     }
                     return true;
                 }
-                else if (lastFrame.Rolls.Count() == 3)
+                else if (lastFrame.RollIndexes.Count() == 3)
                 {
                     return true;
                 }
@@ -169,7 +177,9 @@ namespace BowlingApp.Models
             if (IsGameOver == false)
             {
                 CurrentFrameIndex = GetFrameIndex(CurrentRollIndex);
-                Rolls[CurrentRollIndex++] = pins;
+                Frames[CurrentFrameIndex].RollIndexes.Add(CurrentRollIndex);
+                Rolls[CurrentRollIndex] = pins;
+                CurrentRollIndex++;
                 Score = GetScore();
                 IsGameOver = GetIsGameOver();
             }
@@ -212,27 +222,27 @@ namespace BowlingApp.Models
             return frameIndex;
         }
 
-        public Frame GetFrame(int frameIndex, bool includeScore = true)
-        {
-            Frame frame = new Frame();
-            List<int> frameRolls = new List<int>();
-            for (int rollIndex = 0; rollIndex < CurrentRollIndex; rollIndex++)
-            {
-                if (GetFrameIndex(rollIndex) == frameIndex)
-                {
-                    frameRolls.Add(Rolls[rollIndex]);
-                }
-            }
+        //public Frame GetFrame(int frameIndex, bool includeScore = true)
+        //{
+        //    Frame frame = new Frame();
+        //    List<int> frameRolls = new List<int>();
+        //    for (int rollIndex = 0; rollIndex < CurrentRollIndex; rollIndex++)
+        //    {
+        //        if (GetFrameIndex(rollIndex) == frameIndex)
+        //        {
+        //            frameRolls.Add(Rolls[rollIndex]);
+        //        }
+        //    }
 
-            frame.Rolls = frameRolls.ToArray();
-            if (includeScore)
-            {
-                frame.Score = GetScore(frameIndex);
-            }
+        //    frame.Rolls = frameRolls.ToArray();
+        //    if (includeScore)
+        //    {
+        //        frame.Score = GetScore(frameIndex);
+        //    }
 
 
-            return frame;
-        }
+        //    return frame;
+        //}
 
         public int GetScore(int frameTarget = 9)
         {
@@ -280,6 +290,11 @@ namespace BowlingApp.Models
         protected void OnIsGameOverChanged(bool isGameOver)
         {
             IsGameOverChanged?.Invoke(this, isGameOver);
+        }
+
+        public void EditFrame(int frameIndex, Frame frame)
+        {
+
         }
 
         #endregion

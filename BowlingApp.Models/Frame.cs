@@ -8,7 +8,11 @@ namespace BowlingApp.Models
 {
     public class Frame
     {
-        public int[] Rolls { get; set; }
-        public int Score { get; set; }
+        public Frame()
+        {
+            RollIndexes = new List<int>();
+        }
+
+        public List<int> RollIndexes { get; set; } 
     }
 }

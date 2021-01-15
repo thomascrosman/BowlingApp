@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BowlingApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,5 +25,21 @@ namespace BowlingApp
         {
             InitializeComponent();
         }
+
+        void showLoadRollsDialog_Click(object sender, RoutedEventArgs e)
+        {
+            GameVM gameVM = (GameVM)DataContext;
+            LoadRollsDialog loadRollsDialog = new LoadRollsDialog(gameVM.Rolls);
+            if (loadRollsDialog.ShowDialog() == true)
+            {
+                gameVM.Reset();
+                foreach (int roll in loadRollsDialog.Rolls)
+                {
+                    gameVM.Roll(roll);
+                }
+            }
+        }
+
+
     }
 }
