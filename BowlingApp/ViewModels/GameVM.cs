@@ -63,7 +63,10 @@ namespace BowlingApp
         public void Reset()
         {
             game.Reset();
-
+            foreach (FrameVM frameVM in FrameVMs)
+            {
+                frameVM.Reset();
+            }
         }
 
 

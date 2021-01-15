@@ -101,20 +101,6 @@ namespace BowlingApp
 
         private void OnRollsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if(Rolls.Count == 0)
-            {
-                ScoreSlot1 = "";
-                ScoreSlot2 = "";
-
-                if (FrameIndex == 9)
-                {
-                    ScoreSlot3 = "";
-                }
-
-                ScoreSlotTotal = "";
-            }
-            else
-            {
                 if (FrameIndex == 9)
                 {
                     if (Rolls.Count == 1)
@@ -190,8 +176,20 @@ namespace BowlingApp
                             ScoreSlot2 = Rolls[1].ToString();
                         }
                     }
-                }
             }            
+        }
+
+        public void Reset()
+        {
+            ScoreSlot1 = "";
+            ScoreSlot2 = "";
+
+            if (FrameIndex == 9)
+            {
+                ScoreSlot3 = "";
+            }
+
+            ScoreSlotTotal = "";
         }
     }
 }

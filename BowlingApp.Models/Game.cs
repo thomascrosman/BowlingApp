@@ -75,6 +75,7 @@ namespace BowlingApp.Models
             CurrentRollIndex = 0;
             CurrentFrameIndex = 0;
             Score = 0;
+            IsGameOver = false;
         }
 
         public void Roll()
