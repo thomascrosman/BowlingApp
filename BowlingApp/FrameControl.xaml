@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="BowlingApp.FrameControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BowlingApp"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="80" Height="100" Width="Auto">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1" Background="Black">
+            <TextBlock FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding FrameNumber}"></TextBlock>
+        </Border>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Border Width="40">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot1}"></TextBlock>
+            </Border>
+            <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot2}"></TextBlock>
+            </Border>
+            <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding FrameNumber}" Value="10">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot3}"></TextBlock>
+            </Border>
+        </StackPanel>
+        
+        <TextBlock FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Text="{Binding ScoreSlotTotal}"></TextBlock>
+    </Grid>
+
+</UserControl>
