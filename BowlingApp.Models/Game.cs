@@ -172,6 +172,14 @@ namespace BowlingApp.Models
             return Rolls[rollIndex] == 10;
         }
 
+        public void RollMany(int[] pinArray)
+        {
+            for (int i = 0; i < pinArray.Length; i++)
+            {
+                Roll(pinArray[i]);
+            }
+        }
+
         public void Roll(int pins)
         {
             if (IsGameOver == false)
@@ -183,14 +191,6 @@ namespace BowlingApp.Models
                 CurrentFrameIndex = GetFrameIndex(CurrentRollIndex);
                 Score = GetScore();
                 IsGameOver = GetIsGameOver();
-            }
-        }
-
-        public void RollMany(int[] pinArray)
-        {
-            for (int i = 0; i < pinArray.Length; i++)
-            {
-                Roll(pinArray[i]);
             }
         }
 
@@ -222,28 +222,6 @@ namespace BowlingApp.Models
             }
             return frameIndex;
         }
-
-        //public Frame GetFrame(int frameIndex, bool includeScore = true)
-        //{
-        //    Frame frame = new Frame();
-        //    List<int> frameRolls = new List<int>();
-        //    for (int rollIndex = 0; rollIndex < CurrentRollIndex; rollIndex++)
-        //    {
-        //        if (GetFrameIndex(rollIndex) == frameIndex)
-        //        {
-        //            frameRolls.Add(Rolls[rollIndex]);
-        //        }
-        //    }
-
-        //    frame.Rolls = frameRolls.ToArray();
-        //    if (includeScore)
-        //    {
-        //        frame.Score = GetScore(frameIndex);
-        //    }
-
-
-        //    return frame;
-        //}
 
         public int GetScore(int frameTarget = 9)
         {

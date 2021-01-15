@@ -1,16 +1,8 @@
 ﻿using BowlingApp.Models;
 using GalaSoft.MvvmLight;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using Frame = BowlingApp.Models.Frame;
 
 namespace BowlingApp
 {
@@ -18,28 +10,23 @@ namespace BowlingApp
     {
         public GameVM()
         {
-            FrameVMs = new BindingList<FrameVM>
-            {
-                new FrameVM(0),
-                new FrameVM(1),
-                new FrameVM(2),
-                new FrameVM(3),
-                new FrameVM(4),
-                new FrameVM(5),
-                new FrameVM(6),
-                new FrameVM(7),
-                new FrameVM(8),
-                new FrameVM(9),
-            };
-
-            FrameVMs[0].IsActiveFrame = true;
-
             game = new Game();
+
+            FrameVMs = new BindingList<FrameVM>();
+
+            foreach (Frame frame in game.Frames)
+            {
+                FrameVMs.Add(new FrameVM(this, frame));
+            }
+
             game.CurrentRollIndexChanged += OnCurrentRollIndexChanged;
             game.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
             game.ScoreChanged += OnScoreChanged;
             game.IsGameOverChanged += OnIsGameOverChanged;
+
         }
+
+        private Game game;
 
         #region Commands
         private ICommand _RollCommand;
@@ -71,15 +58,8 @@ namespace BowlingApp
         public void Reset()
         {
             game.Reset();
-            foreach (FrameVM frameVM in FrameVMs)
-            {
-                frameVM.Reset();
-            }
         }
 
-
-
-        private Game game;
 
         public void Roll()
         {
@@ -89,6 +69,11 @@ namespace BowlingApp
         public void Roll(int roll)
         {
             game.Roll(roll);
+        }
+
+        public int GetScoreByFrameIndex(int frameIndex)
+        {
+            return game.GetScore(frameIndex);
         }
 
         public int CurrentRollIndex
@@ -123,6 +108,14 @@ namespace BowlingApp
             }
         }
 
+        public Frame[] Frames
+        {
+            get
+            {
+                return game.Frames;
+            }
+        }
+
         public bool IsGameOver
         {
             get
@@ -132,36 +125,36 @@ namespace BowlingApp
         }
 
 
-        private void OnCurrentFrameIndexChanged(object sender, int currentFrameIndex)
+        public void OnCurrentFrameIndexChanged(object sender, int currentFrameIndex)
         {
             RaisePropertyChanged(() => CurrentFrameIndex);
-            FrameVMs.ToList().ForEach(frameVM => frameVM.IsActiveFrame = false);
-            FrameVMs[currentFrameIndex].IsActiveFrame = true;
+            CurrentRollIndexChanged?.Invoke(this, currentFrameIndex);
         }
 
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndex)
         {
             RaisePropertyChanged(() => CurrentRollIndex);
+            CurrentFrameIndexChanged?.Invoke(this, currentRollIndex);
         }
 
         private void OnScoreChanged(object sender, int score)
         {
             RaisePropertyChanged(() => Score);
-            for (int frameIndex = 0; frameIndex < CurrentFrameIndex + 1; frameIndex++)
-            {
-                FrameVM frameVM = FrameVMs[frameIndex];
-                frameVM.Rolls.Clear();
-                Frame frame = game.Frames[frameIndex];
-                foreach(int rollIndex in frame.RollIndexes)
-                {
-                    int roll = game.Rolls[rollIndex];
-                    frameVM.Rolls.Add(roll);
-                }
+            //for (int frameIndex = 0; frameIndex < CurrentFrameIndex + 1; frameIndex++)
+            //{
+            //    FrameVM frameVM = FrameVMs[frameIndex];
+            //    frameVM.Rolls.Clear();
+            //    Frame frame = game.Frames[frameIndex];
+            //    foreach(int rollIndex in frame.RollIndexes)
+            //    {
+            //        int roll = game.Rolls[rollIndex];
+            //        frameVM.Rolls.Add(roll);
+            //    }
 
-                int frameScore = game.GetScore(frameIndex);
+            //    int frameScore = game.GetScore(frameIndex);
 
-                frameVM.ScoreSlotTotal = frameScore.ToString();               
-            }
+            //    frameVM.ScoreSlotTotal = frameScore.ToString();               
+            //}
         }
 
         private void OnIsGameOverChanged(object sender, bool isGameOver)
@@ -172,6 +165,10 @@ namespace BowlingApp
 
 
         public BindingList<FrameVM> FrameVMs { get; set; }
-       
+
+
+        public event EventHandler<int> CurrentRollIndexChanged;
+        public event EventHandler<int> CurrentFrameIndexChanged;
+
     }
 }

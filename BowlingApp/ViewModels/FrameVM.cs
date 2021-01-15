@@ -8,16 +8,177 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using BowlingApp.Models;
 
 namespace BowlingApp
 {
     public class FrameVM : ViewModelBase
     {
-        public FrameVM(int frameIndex)
+        private GameVM GameVM { get; set; }
+        public Frame Frame { get; set; }
+
+        public FrameVM(GameVM gameVM, Frame frame)
         {
-            FrameIndex = frameIndex;
-            Rolls = new ObservableCollection<int>();
-            Rolls.CollectionChanged += OnRollsChanged;
+            GameVM = gameVM;
+            Frame = frame;
+            GameVM.CurrentRollIndexChanged += OnCurrentRollIndexChanged;
+            GameVM.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
+        }
+
+        private void OnCurrentRollIndexChanged(object sender, int currentRollIndexChanged)
+        {
+            if(GameVM.CurrentFrameIndex >= FrameIndex)
+            {
+                int rollCount = Frame.RollIndexes.Count;
+
+                if(rollCount == 0)
+                {
+                    ScoreSlot1 = "";
+                    ScoreSlot2 = "";
+
+                    if (FrameIndex == 9)
+                    {
+                        ScoreSlot3 = "";
+                    }
+
+                    ScoreSlotTotal = "";
+                }
+                else
+                {
+                    int firstRoll = 0;
+                    int secondRoll = 0;
+                    int thirdRoll = 0;
+
+                    if (rollCount == 1)
+                    {
+                        firstRoll = GameVM.Rolls[Frame.RollIndexes[0]];
+                    }
+
+                    if (rollCount == 2)
+                    {
+                        secondRoll = GameVM.Rolls[Frame.RollIndexes[1]];
+                    }
+
+                    if (rollCount == 3)
+                    {
+                        thirdRoll = GameVM.Rolls[Frame.RollIndexes[2]];
+                    }
+
+                    if (FrameIndex == 9)
+                    {
+                        if (rollCount == 1)
+                        {
+                            if (firstRoll == 10)
+                            {
+                                ScoreSlot1 = "X";
+                            }
+                            else if (firstRoll == 0)
+                            {
+                                ScoreSlot1 = "-";
+                            }
+                            else
+                            {
+                                ScoreSlot1 = firstRoll.ToString();
+                            }
+                        }
+                        else if (rollCount == 2)
+                        {
+                            if (firstRoll == 10)
+                            {
+                                if (secondRoll == 10)
+                                {
+                                    ScoreSlot2 = "X";
+                                }
+                                else if (secondRoll == 0)
+                                {
+                                    ScoreSlot2 = "-";
+                                }
+                                else
+                                {
+                                    ScoreSlot2 = secondRoll.ToString();
+                                }
+                            }
+                            else
+                            {
+                                if (firstRoll + secondRoll == 10)
+                                {
+                                    ScoreSlot2 = "/";
+                                }
+                                else if (secondRoll == 0)
+                                {
+                                    ScoreSlot2 = "-";
+                                }
+                                else
+                                {
+                                    ScoreSlot2 = secondRoll.ToString();
+                                }
+                            }
+                        }
+                        else if (rollCount == 3)
+                        {
+                            if (thirdRoll == 10)
+                            {
+                                ScoreSlot3 = "X";
+                            }
+                            else if (thirdRoll == 0) {
+                                ScoreSlot3 = "-";
+                            }
+                            else
+                            {
+                                ScoreSlot3 = thirdRoll.ToString();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(rollCount == 1)
+                        {
+                            if (firstRoll == 10)
+                            {
+                                ScoreSlot2 = "X";
+                            }
+                            else if(firstRoll == 0)
+                            {
+                                ScoreSlot1 = "-";
+                            }
+                            else
+                            {
+                                ScoreSlot1 = firstRoll.ToString();
+                            }
+                        }
+                        else
+                        {
+                            if (firstRoll + secondRoll == 10)
+                            {
+                                ScoreSlot2 = "/";
+                            }
+                            else if(secondRoll == 0)
+                            {
+                                ScoreSlot2 = "-";
+                            }
+                            else
+                            {
+                                ScoreSlot2 = secondRoll.ToString();
+                            }
+                        }
+                    }
+                }
+               
+                ScoreSlotTotal = GameVM.GetScoreByFrameIndex(FrameIndex).ToString();
+            }
+            else
+            {
+                ScoreSlot1 = "";
+                ScoreSlot2 = "";
+                ScoreSlot3 = "";
+                ScoreSlotTotal = "";
+            }           
+        }
+
+
+        private void OnCurrentFrameIndexChanged(object sender, int currentFrameIndexChanged)
+        {
+            RaisePropertyChanged(() => IsActiveFrame);
         }
 
         private ICommand _SetRollCommand;
@@ -30,22 +191,21 @@ namespace BowlingApp
         }
 
 
+
         public void SetRoll()
         {
 
         }
 
-        private bool _IsActiveFrame;
         public bool IsActiveFrame
         {
             get
             {
-                return _IsActiveFrame;
-            }
-            set
-            {
-                _IsActiveFrame = value;
-                RaisePropertyChanged(() => IsActiveFrame);
+                if(GameVM.CurrentFrameIndex == FrameIndex)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
@@ -59,18 +219,13 @@ namespace BowlingApp
             }
         }
 
-        public ObservableCollection<int> Rolls;
-        private int _FrameIndex;
+
         public int FrameIndex
         {
             get
             {
-                return _FrameIndex;
-            }
-            set
-            {
-                _FrameIndex = value;
-                
+
+                return GameVM.FrameVMs.IndexOf(this);
             }
         }
 
@@ -131,97 +286,8 @@ namespace BowlingApp
             }
         }
 
-        private void OnRollsChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-                if (FrameIndex == 9)
-                {
-                    if (Rolls.Count == 1)
-                    {
-                        if (Rolls[0] == 10)
-                        {
-                            ScoreSlot1 = "X";
-                        }
-                        else
-                        {
-                            ScoreSlot1 = Rolls[0].ToString();
-                        }
-                    }
-                    else if (Rolls.Count == 2)
-                    {
-                        if (Rolls[0] == 10)
-                        {
-                            if (Rolls[1] == 10)
-                            {
-                                ScoreSlot2 = "X";
-                            }
-                            else
-                            {
-                                ScoreSlot2 = Rolls[1].ToString();
-                            }
-                        }
-                        else
-                        {
-                            if (Rolls[0] + Rolls[1] == 10)
-                            {
-                                ScoreSlot2 = "/";
-                            }
-                            else
-                            {
-                                ScoreSlot2 = Rolls[1].ToString();
-                            }
-                        }
-                    }
-                    else if (Rolls.Count == 3)
-                    {
-                        if (Rolls[2] == 10)
-                        {
-                            ScoreSlot3 = "X";
-                        }
-                        else
-                        {
-                            ScoreSlot3 = Rolls[2].ToString();
-                        }
-                    }
-                }
-                else
-                {
-                    if (Rolls.Count == 1)
-                    {
-                        if (Rolls[0] == 10)
-                        {
-                            ScoreSlot2 = "X";
-                        }
-                        else
-                        {
-                            ScoreSlot1 = Rolls[0].ToString();
-                        }
-                    }
-                    else if (Rolls.Count == 2)
-                    {
-                        ScoreSlot1 = Rolls[0].ToString();
-                        if (Rolls[0] + Rolls[1] == 10)
-                        {
-                            ScoreSlot2 = "/";
-                        }
-                        else
-                        {
-                            ScoreSlot2 = Rolls[1].ToString();
-                        }
-                    }
-            }            
-        }
 
-        public void Reset()
-        {
-            ScoreSlot1 = "";
-            ScoreSlot2 = "";
 
-            if (FrameIndex == 9)
-            {
-                ScoreSlot3 = "";
-            }
 
-            ScoreSlotTotal = "";
-        }
     }
 }
