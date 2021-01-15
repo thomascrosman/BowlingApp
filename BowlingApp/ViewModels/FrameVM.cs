@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace BowlingApp
 {
@@ -18,6 +19,37 @@ namespace BowlingApp
             Rolls = new ObservableCollection<int>();
             Rolls.CollectionChanged += OnRollsChanged;
         }
+
+        private ICommand _SetRollCommand;
+        public ICommand SetRollCommand
+        {
+            get
+            {
+                return _SetRollCommand ?? (_SetRollCommand = new CommandHandler(() => SetRoll(), () => IsActiveFrame));
+            }
+        }
+
+
+        public void SetRoll()
+        {
+
+        }
+
+        private bool _IsActiveFrame;
+        public bool IsActiveFrame
+        {
+            get
+            {
+                return _IsActiveFrame;
+            }
+            set
+            {
+                _IsActiveFrame = value;
+                RaisePropertyChanged(() => IsActiveFrame);
+            }
+        }
+
+
 
         public int FrameNumber
         {
@@ -38,7 +70,7 @@ namespace BowlingApp
             set
             {
                 _FrameIndex = value;
-                RaisePropertyChanged(() => FrameIndex);
+                
             }
         }
 

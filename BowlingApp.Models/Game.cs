@@ -180,6 +180,7 @@ namespace BowlingApp.Models
                 Frames[CurrentFrameIndex].RollIndexes.Add(CurrentRollIndex);
                 Rolls[CurrentRollIndex] = pins;
                 CurrentRollIndex++;
+                CurrentFrameIndex = GetFrameIndex(CurrentRollIndex);
                 Score = GetScore();
                 IsGameOver = GetIsGameOver();
             }

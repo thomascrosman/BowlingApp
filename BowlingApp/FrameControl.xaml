@@ -10,36 +10,93 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
-            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
         </Grid.RowDefinitions>
+        
         <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,1" Background="Black">
             <TextBlock FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding FrameNumber}"></TextBlock>
         </Border>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Border Width="40">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot1}"></TextBlock>
-            </Border>
-            <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot2}"></TextBlock>
-            </Border>
-            <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
-                <Border.Style>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Background" Value="#1B78E0"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                            <Setter Property="Background" Value="#FFC600"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Border Width="40">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot1}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                                        <Setter Property="Foreground" Value="Black"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot2}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                                        <Setter Property="Foreground" Value="Black"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+                <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FrameNumber}" Value="10">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot3}">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                                        <Setter Property="Foreground" Value="Black"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Border>
+            </StackPanel>
+
+            <TextBlock Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="{Binding ScoreSlotTotal}">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding FrameNumber}" Value="10">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot3}"></TextBlock>
-            </Border>
-        </StackPanel>
-        
-        <TextBlock FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Text="{Binding ScoreSlotTotal}"></TextBlock>
+                        <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                            <Setter Property="Foreground" Value="Black"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+
     </Grid>
 
 </UserControl>

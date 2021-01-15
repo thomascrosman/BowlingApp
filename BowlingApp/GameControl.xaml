@@ -26,28 +26,9 @@
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <local:FrameControl>
-                                <local:FrameControl.Style>
-                                    <Style TargetType="local:FrameControl">
-                                        <Setter Property="Background" Value="#1B78E0"></Setter>
-                                        <Style.Triggers>
-                                            <DataTrigger Value="True">
-                                                <DataTrigger.Binding>
-                                                    <MultiBinding>
-                                                        <MultiBinding.Converter>
-                                                            <local1:EqualityConverter />
-                                                        </MultiBinding.Converter>
-                                                        <Binding Path="FrameIndex" />
-                                                        <Binding Path="DataContext.CurrentFrameIndex" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
-                                                    </MultiBinding>
-                                                </DataTrigger.Binding>
-                                                <Setter Property="Background" Value="#FFC600"></Setter>
-                                                <Setter Property="Foreground" Value="Black"></Setter>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </local:FrameControl.Style>
-                            </local:FrameControl>
+                            <local:FrameControl/>
+
+
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

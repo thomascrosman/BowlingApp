@@ -32,6 +32,8 @@ namespace BowlingApp
                 new FrameVM(9),
             };
 
+            FrameVMs[0].IsActiveFrame = true;
+
             game = new Game();
             game.CurrentRollIndexChanged += OnCurrentRollIndexChanged;
             game.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
@@ -49,15 +51,6 @@ namespace BowlingApp
             }
         }
 
-        private ICommand _LoadRollsCommand;
-        public ICommand LoadRollsCommand
-        {
-            get
-            {
-                return _LoadRollsCommand ?? (_LoadRollsCommand = new CommandHandler(() => LoadRolls(), () => true));
-            }
-        }
-
         private ICommand _ResetCommand;
         public ICommand ResetCommand
         {
@@ -69,11 +62,10 @@ namespace BowlingApp
         #endregion
 
 
-        public void LoadRolls()
+        public void LoadRolls(int[] rolls)
         {
-            MessageBox.Show("Loading Rolls");
             game.Reset();
-            game.RollMany(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 });
+            game.RollMany(rolls);
         }
 
         public void Reset()
@@ -143,6 +135,8 @@ namespace BowlingApp
         private void OnCurrentFrameIndexChanged(object sender, int currentFrameIndex)
         {
             RaisePropertyChanged(() => CurrentFrameIndex);
+            FrameVMs.ToList().ForEach(frameVM => frameVM.IsActiveFrame = false);
+            FrameVMs[currentFrameIndex].IsActiveFrame = true;
         }
 
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndex)

@@ -33,10 +33,7 @@ namespace BowlingApp
             if (loadRollsDialog.ShowDialog() == true)
             {
                 gameVM.Reset();
-                foreach (int roll in loadRollsDialog.Rolls)
-                {
-                    gameVM.Roll(roll);
-                }
+                gameVM.LoadRolls(loadRollsDialog.Rolls);
             }
         }
 
