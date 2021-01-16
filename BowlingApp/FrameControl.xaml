@@ -34,30 +34,84 @@
             </Grid.Style>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <Border Width="40">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot1}">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
-                                        <Setter Property="Foreground" Value="Black"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot1}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                                            <Setter Property="Foreground" Value="Black"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ScoreSlot1Active }" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <ComboBox>
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ScoreSlot1Active }" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Style>
+                            <ComboBoxItem>
+                                <TextBlock Text="1"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="2"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="3"></TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
                 </Border>
                 <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot2}">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
-                                        <Setter Property="Foreground" Value="Black"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot2}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                                            <Setter Property="Foreground" Value="Black"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ScoreSlot2Active }" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <ComboBox>
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ScoreSlot2Active }" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Style>
+                            <ComboBoxItem>
+                                <TextBlock Text="1"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="2"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="3"></TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
                 </Border>
                 <Border Width="40" BorderBrush="Black" BorderThickness="1,0,0,1">
                     <Border.Style>
@@ -70,17 +124,44 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot3}">
-                        <TextBlock.Style>
-                            <Style TargetType="TextBlock">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
-                                        <Setter Property="Foreground" Value="Black"></Setter>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBlock.Style>
-                    </TextBlock>
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ScoreSlot3}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsActiveFrame}" Value="True">
+                                            <Setter Property="Foreground" Value="Black"></Setter>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ScoreSlot3Active }" Value="True">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <ComboBox>
+                            <ComboBox.Style>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ScoreSlot3Active }" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ComboBox.Style>
+                            <ComboBoxItem>
+                                <TextBlock Text="1"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="2"></TextBlock>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="3"></TextBlock>
+                            </ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
                 </Border>
             </StackPanel>
 

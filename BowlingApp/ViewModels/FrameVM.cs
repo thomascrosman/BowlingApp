@@ -26,6 +26,48 @@ namespace BowlingApp
         }
 
 
+        private bool _ScoreSlot1Active;
+        public bool ScoreSlot1Active
+        {
+            get
+            {
+                return _ScoreSlot1Active;
+            }
+            set
+            {
+                _ScoreSlot1Active = value;
+                RaisePropertyChanged(() => ScoreSlot1Active);
+            }
+        }
+
+        private bool _ScoreSlot2Active;
+        public bool ScoreSlot2Active
+        {
+            get
+            {
+                return _ScoreSlot2Active;
+            }
+            set
+            {
+                _ScoreSlot2Active = value;
+                RaisePropertyChanged(() => ScoreSlot2Active);
+            }
+        }
+
+        private bool _ScoreSlot3Active;
+        public bool ScoreSlot3Active
+        {
+            get
+            {
+                return _ScoreSlot3Active;
+            }
+            set
+            {
+                _ScoreSlot3Active = value;
+                RaisePropertyChanged(() => ScoreSlot3Active);
+            }
+        }
+
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndexChanged)
         {
             if (GameVM.CurrentFrameIndex >= FrameIndex)
@@ -34,18 +76,34 @@ namespace BowlingApp
 
                 if (rollCount == 0)
                 {
+                    ScoreSlot1Active = true;
+                    ScoreSlot2Active = false;
+                    ScoreSlot3Active = false;
+
                     ScoreSlot1 = "";
                     ScoreSlot2 = "";
+                    ScoreSlot3 = "";
 
-                    if (FrameIndex == 9)
-                    {
-                        ScoreSlot3 = "";
-                    }
 
                     ScoreSlotTotal = "";
                 }
                 else
                 {
+                    if (rollCount == 1)
+                    {
+                        ScoreSlot1Active = false;
+                        ScoreSlot2Active = true;
+                        ScoreSlot3Active = false;
+                    }
+
+                    if (rollCount == 2)
+                    {
+                        ScoreSlot1Active = false;
+                        ScoreSlot2Active = false;
+                        ScoreSlot3Active = true;
+                    }
+
+
                     int firstRoll = 0;
                     int secondRoll = 0;
                     int thirdRoll = 0;
@@ -53,7 +111,7 @@ namespace BowlingApp
                     if (rollCount > 0)
                     {
                         firstRoll = GameVM.Rolls[Frame.RollIndexes[0]];
-                    }
+                    }                 
 
                     if (rollCount > 1)
                     {
