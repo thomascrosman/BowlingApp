@@ -50,7 +50,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <ComboBox ItemsSource="{Binding FirstThrowPossibleValues}" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <ComboBox x:Name="FirstThrowCB" ItemsSource="{Binding FirstThrowPossibleValues}" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectionChanged="ComboBox_SelectionChanged">
                             <ComboBox.Style>
                                 <Style TargetType="ComboBox">
                                     <Setter Property="Visibility" Value="Hidden"/>
