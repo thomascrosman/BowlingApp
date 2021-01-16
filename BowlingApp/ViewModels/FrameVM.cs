@@ -25,13 +25,14 @@ namespace BowlingApp
             GameVM.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
         }
 
+
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndexChanged)
         {
-            if(GameVM.CurrentFrameIndex >= FrameIndex)
+            if (GameVM.CurrentFrameIndex >= FrameIndex)
             {
                 int rollCount = Frame.RollIndexes.Count;
 
-                if(rollCount == 0)
+                if (rollCount == 0)
                 {
                     ScoreSlot1 = "";
                     ScoreSlot2 = "";
@@ -49,17 +50,17 @@ namespace BowlingApp
                     int secondRoll = 0;
                     int thirdRoll = 0;
 
-                    if (rollCount == 1)
+                    if (rollCount > 0)
                     {
                         firstRoll = GameVM.Rolls[Frame.RollIndexes[0]];
                     }
 
-                    if (rollCount == 2)
+                    if (rollCount > 1)
                     {
                         secondRoll = GameVM.Rolls[Frame.RollIndexes[1]];
                     }
 
-                    if (rollCount == 3)
+                    if (rollCount > 2)
                     {
                         thirdRoll = GameVM.Rolls[Frame.RollIndexes[2]];
                     }
@@ -120,7 +121,8 @@ namespace BowlingApp
                             {
                                 ScoreSlot3 = "X";
                             }
-                            else if (thirdRoll == 0) {
+                            else if (thirdRoll == 0)
+                            {
                                 ScoreSlot3 = "-";
                             }
                             else
@@ -131,13 +133,13 @@ namespace BowlingApp
                     }
                     else
                     {
-                        if(rollCount == 1)
+                        if (rollCount == 1)
                         {
                             if (firstRoll == 10)
                             {
                                 ScoreSlot2 = "X";
                             }
-                            else if(firstRoll == 0)
+                            else if (firstRoll == 0)
                             {
                                 ScoreSlot1 = "-";
                             }
@@ -146,13 +148,13 @@ namespace BowlingApp
                                 ScoreSlot1 = firstRoll.ToString();
                             }
                         }
-                        else
+                        else if (rollCount == 2)
                         {
                             if (firstRoll + secondRoll == 10)
                             {
                                 ScoreSlot2 = "/";
                             }
-                            else if(secondRoll == 0)
+                            else if (secondRoll == 0)
                             {
                                 ScoreSlot2 = "-";
                             }
@@ -163,16 +165,22 @@ namespace BowlingApp
                         }
                     }
                 }
-               
-                ScoreSlotTotal = GameVM.GetScoreByFrameIndex(FrameIndex).ToString();
             }
             else
             {
                 ScoreSlot1 = "";
                 ScoreSlot2 = "";
                 ScoreSlot3 = "";
+            }
+
+            if(GameVM.CurrentFrameIndex >= FrameIndex)
+            {
+                ScoreSlotTotal = GameVM.GetScoreByFrameIndex(FrameIndex).ToString();
+            }
+            else
+            {
                 ScoreSlotTotal = "";
-            }           
+            }
         }
 
 

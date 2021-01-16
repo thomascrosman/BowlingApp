@@ -26,20 +26,6 @@ namespace BowlingApp.Models
             }
         }
 
-        private int _CurrentFrameIndex = 0;
-        public int CurrentFrameIndex
-        {
-            get
-            {
-                return _CurrentFrameIndex;
-            }
-            set
-            {
-                _CurrentFrameIndex = value;
-                OnCurrentFrameIndexChanged(CurrentFrameIndex);
-            }
-        }
-
         private int _Score = 0;
         public int Score
         {
@@ -74,9 +60,8 @@ namespace BowlingApp.Models
         public void Reset()
         {
             Rolls = new int[21];
-            Frames = new Frame[10].Select(f => new Frame()).ToArray();
+            Frames.ToList().ForEach(frame => frame.RollIndexes.Clear());
             CurrentRollIndex = 0;
-            CurrentFrameIndex = 0;
             Score = 0;
             IsGameOver = false;
         }
@@ -85,9 +70,10 @@ namespace BowlingApp.Models
         {
             Random rnd = new Random();
 
-            Frame currentFrame = Frames[CurrentFrameIndex];
+            int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
+            Frame currentFrame = Frames[currentFrameIndex];
 
-            if (CurrentFrameIndex == 9)
+            if (currentFrameIndex == 9)
             {
                 if (currentFrame.RollIndexes.Count() == 0)
                 {
@@ -141,9 +127,10 @@ namespace BowlingApp.Models
 
         public bool GetIsGameOver()
         {
-            if (CurrentFrameIndex == 9)
+            int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
+            if (currentFrameIndex == 9)
             {
-                Frame lastFrame = Frames[CurrentFrameIndex];
+                Frame lastFrame = Frames[currentFrameIndex];
                 if (lastFrame.RollIndexes.Count() == 2)
                 {
                     int firstRoll = Rolls[lastFrame.RollIndexes[0]];
@@ -184,11 +171,10 @@ namespace BowlingApp.Models
         {
             if (IsGameOver == false)
             {
-                CurrentFrameIndex = GetFrameIndex(CurrentRollIndex);
-                Frames[CurrentFrameIndex].RollIndexes.Add(CurrentRollIndex);
+                int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
+                Frames[currentFrameIndex].RollIndexes.Add(CurrentRollIndex);
                 Rolls[CurrentRollIndex] = pins;
                 CurrentRollIndex++;
-                CurrentFrameIndex = GetFrameIndex(CurrentRollIndex);
                 Score = GetScore();
                 IsGameOver = GetIsGameOver();
             }
@@ -256,10 +242,7 @@ namespace BowlingApp.Models
             CurrentRollIndexChanged?.Invoke(this, currentRollIndex);
         }
 
-        protected void OnCurrentFrameIndexChanged(int currentFrameIndex)
-        {
-            CurrentFrameIndexChanged?.Invoke(this, currentFrameIndex);
-        }
+
 
         protected void OnScoreChanged(int score)
         {
@@ -280,7 +263,6 @@ namespace BowlingApp.Models
 
         #region Events
         public event EventHandler<int> CurrentRollIndexChanged;
-        public event EventHandler<int> CurrentFrameIndexChanged;
         public event EventHandler<int> ScoreChanged;
         public event EventHandler<bool> IsGameOverChanged;
         #endregion

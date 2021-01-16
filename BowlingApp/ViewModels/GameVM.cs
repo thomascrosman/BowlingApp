@@ -20,7 +20,6 @@ namespace BowlingApp
             }
 
             game.CurrentRollIndexChanged += OnCurrentRollIndexChanged;
-            game.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
             game.ScoreChanged += OnScoreChanged;
             game.IsGameOverChanged += OnIsGameOverChanged;
 
@@ -88,7 +87,7 @@ namespace BowlingApp
         {
             get
             {
-                return game.CurrentFrameIndex;
+                return game.GetFrameIndex(CurrentRollIndex);
             }
         }
 
@@ -128,33 +127,19 @@ namespace BowlingApp
         public void OnCurrentFrameIndexChanged(object sender, int currentFrameIndex)
         {
             RaisePropertyChanged(() => CurrentFrameIndex);
-            CurrentRollIndexChanged?.Invoke(this, currentFrameIndex);
+            CurrentFrameIndexChanged?.Invoke(this, currentFrameIndex);
         }
 
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndex)
         {
             RaisePropertyChanged(() => CurrentRollIndex);
-            CurrentFrameIndexChanged?.Invoke(this, currentRollIndex);
+            CurrentRollIndexChanged?.Invoke(this, currentRollIndex);
+            CurrentFrameIndexChanged?.Invoke(this, game.GetFrameIndex(currentRollIndex));
         }
 
         private void OnScoreChanged(object sender, int score)
         {
             RaisePropertyChanged(() => Score);
-            //for (int frameIndex = 0; frameIndex < CurrentFrameIndex + 1; frameIndex++)
-            //{
-            //    FrameVM frameVM = FrameVMs[frameIndex];
-            //    frameVM.Rolls.Clear();
-            //    Frame frame = game.Frames[frameIndex];
-            //    foreach(int rollIndex in frame.RollIndexes)
-            //    {
-            //        int roll = game.Rolls[rollIndex];
-            //        frameVM.Rolls.Add(roll);
-            //    }
-
-            //    int frameScore = game.GetScore(frameIndex);
-
-            //    frameVM.ScoreSlotTotal = frameScore.ToString();               
-            //}
         }
 
         private void OnIsGameOverChanged(object sender, bool isGameOver)
