@@ -25,6 +25,8 @@ namespace BowlingApp
             GameVM.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
         }
 
+        public BindingList<int> FirstThrowPossibleValues { get; set; } = new BindingList<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
 
         private bool _ScoreSlot1Active;
         public bool ScoreSlot1Active
@@ -89,21 +91,6 @@ namespace BowlingApp
                 }
                 else
                 {
-                    if (rollCount == 1)
-                    {
-                        ScoreSlot1Active = false;
-                        ScoreSlot2Active = true;
-                        ScoreSlot3Active = false;
-                    }
-
-                    if (rollCount == 2)
-                    {
-                        ScoreSlot1Active = false;
-                        ScoreSlot2Active = false;
-                        ScoreSlot3Active = true;
-                    }
-
-
                     int firstRoll = 0;
                     int secondRoll = 0;
                     int thirdRoll = 0;

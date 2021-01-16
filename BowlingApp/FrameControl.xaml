@@ -50,7 +50,7 @@
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <ComboBox>
+                        <ComboBox ItemsSource="{Binding FirstThrowPossibleValues}" FontSize="10" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
                             <ComboBox.Style>
                                 <Style TargetType="ComboBox">
                                     <Setter Property="Visibility" Value="Hidden"/>
@@ -61,15 +61,6 @@
                                     </Style.Triggers>
                                 </Style>
                             </ComboBox.Style>
-                            <ComboBoxItem>
-                                <TextBlock Text="1"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="2"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="3"></TextBlock>
-                            </ComboBoxItem>
                         </ComboBox>
                     </Grid>
                 </Border>
