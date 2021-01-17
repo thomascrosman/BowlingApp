@@ -8,12 +8,20 @@
              d:DesignHeight="100" d:DesignWidth="920" Width="Auto" Height="Auto">
     <StackPanel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button Command="{Binding RollCommand}">Next Roll</Button>
-            <ComboBox ItemsSource="{Binding Path=PossibleNextThrowValues}" SelectedValue="{Binding Path=NextThrowValue}" />
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="Randomize">Randomize</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="0">0</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="1">1</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="2">2</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="3">3</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="4">4</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="5">5</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="6">6</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="7">7</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="8">8</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="9">9</Button>
+            <Button Margin="5" Command="{Binding RollCommand}" CommandParameter="10">10</Button>
         </StackPanel>
-        
-        
-
+            
         <Button Command="{Binding ResetCommand}">Reset</Button>
         <Button Click="showLoadRollsDialog_Click">Load Rolls</Button>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

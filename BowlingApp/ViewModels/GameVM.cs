@@ -117,15 +117,21 @@ namespace BowlingApp
         #endregion
 
         #region Functions
-        public void Roll()
+        public void Roll(object arg)
         {
-            game.Roll();
+            string str = (string)arg;
+            if(str == "Randomize")
+            {
+                game.Roll();
+            }
+            else
+            {
+                int roll = Int32.Parse(str);
+                game.Roll(roll);
+            }
         }
 
-        public void Roll(int roll)
-        {
-            game.Roll(roll);
-        }
+
 
         public int GetScoreByFrameIndex(int frameIndex)
         {
@@ -174,7 +180,7 @@ namespace BowlingApp
         {
             get
             {
-                return _RollCommand ?? (_RollCommand = new CommandHandler(() => Roll(), () => !IsGameOver));
+                return _RollCommand ?? (_RollCommand = new CommandHandler((arg) => Roll(arg), () => !IsGameOver));
             }
         }
 
@@ -183,7 +189,7 @@ namespace BowlingApp
         {
             get
             {
-                return _ResetCommand ?? (_ResetCommand = new CommandHandler(() => Reset(), () => true));
+                return _ResetCommand ?? (_ResetCommand = new CommandHandler((arg) => Reset(), () => true));
             }
         }
         #endregion
