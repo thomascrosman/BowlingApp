@@ -81,8 +81,9 @@ namespace BowlingApp.Models
                     }
                     else
                     {
+                        int firstRoll = Rolls[currentFrame.RollIndexes[0]];
                         int secondRoll = Rolls[currentFrame.RollIndexes[1]];
-                        if (secondRoll == 10)
+                        if (firstRoll + secondRoll == 10 || secondRoll == 10)
                         {
                             return 10;
                         }
