@@ -54,6 +54,59 @@ namespace BowlingApp.Models
             }
         }
 
+        public int NextRollMaximum
+        {
+            get
+            {
+                int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
+                Frame currentFrame = Frames[currentFrameIndex];
+
+                if (currentFrameIndex == 9)
+                {
+                    if (currentFrame.RollIndexes.Count() == 0)
+                    {
+                        return 10;
+                    }
+                    else if (currentFrame.RollIndexes.Count() == 1)
+                    {
+                        int firstRoll = Rolls[currentFrame.RollIndexes[0]];
+                        if (firstRoll == 10)
+                        {
+                            return 10;
+                        }
+                        else
+                        {
+                            return 10 - firstRoll;
+                        }
+                    }
+                    else
+                    {
+                        int secondRoll = Rolls[currentFrame.RollIndexes[1]];
+                        if (secondRoll == 10)
+                        {
+                            return 10;
+                        }
+                        else
+                        {
+                            return 10 - secondRoll;
+                        }
+                    }
+                }
+                else
+                {
+                    if (currentFrame.RollIndexes.Count() == 0)
+                    {
+                        return 10;
+                    }
+                    else
+                    {
+                        int firstRoll = Rolls[currentFrame.RollIndexes[0]];
+                        return 11 - firstRoll;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Functions
@@ -69,59 +122,27 @@ namespace BowlingApp.Models
         public void Roll()
         {
             Random rnd = new Random();
+            Roll(rnd.Next(0, NextRollMaximum + 1));     
+        }
 
-            int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
-            Frame currentFrame = Frames[currentFrameIndex];
-
-            if (currentFrameIndex == 9)
+        public void RollMany(int[] pinArray)
+        {
+            for (int i = 0; i < pinArray.Length; i++)
             {
-                if (currentFrame.RollIndexes.Count() == 0)
-                {
-                    int pins = rnd.Next(0, 11);
-                    Roll(pins);
-                }
-                else if (currentFrame.RollIndexes.Count() == 1)
-                {
-                    int firstRoll = Rolls[currentFrame.RollIndexes[0]];
-                    if (firstRoll == 10)
-                    {
-                        int pins = rnd.Next(0, 11);
-                        Roll(pins);
-                    }
-                    else
-                    {
-                        int pins = rnd.Next(0, 11 - firstRoll);
-                        Roll(pins);
-                    }
-                }
-                else
-                {
-                    int secondRoll = Rolls[currentFrame.RollIndexes[1]];
-                    if (secondRoll == 10)
-                    {
-                        int pins = rnd.Next(0, 11);
-                        Roll(pins);
-                    }
-                    else
-                    {
-                        int pins = rnd.Next(0, 11 - secondRoll);
-                        Roll(pins);
-                    }
-                }
+                Roll(pinArray[i]);
             }
-            else
+        }
+
+        public void Roll(int pins)
+        {
+            if (IsGameOver == false)
             {
-                if (currentFrame.RollIndexes.Count() == 0)
-                {
-                    int pins = rnd.Next(0, 11);
-                    Roll(pins);
-                }
-                else
-                {
-                    int firstRoll = Rolls[currentFrame.RollIndexes[0]];
-                    int pins = rnd.Next(0, 11 - firstRoll);
-                    Roll(pins);
-                }
+                int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
+                Frames[currentFrameIndex].RollIndexes.Add(CurrentRollIndex);
+                Rolls[CurrentRollIndex] = pins;
+                CurrentRollIndex++;
+                Score = GetScore();
+                IsGameOver = GetIsGameOver();
             }
         }
 
@@ -157,27 +178,6 @@ namespace BowlingApp.Models
         public bool IsStrike(int rollIndex)
         {
             return Rolls[rollIndex] == 10;
-        }
-
-        public void RollMany(int[] pinArray)
-        {
-            for (int i = 0; i < pinArray.Length; i++)
-            {
-                Roll(pinArray[i]);
-            }
-        }
-
-        public void Roll(int pins)
-        {
-            if (IsGameOver == false)
-            {
-                int currentFrameIndex = GetFrameIndex(CurrentRollIndex);
-                Frames[currentFrameIndex].RollIndexes.Add(CurrentRollIndex);
-                Rolls[CurrentRollIndex] = pins;
-                CurrentRollIndex++;
-                Score = GetScore();
-                IsGameOver = GetIsGameOver();
-            }
         }
 
         public int GetFrameIndex(int rollIndex)
@@ -236,13 +236,10 @@ namespace BowlingApp.Models
             return score;
         }
 
-
         protected void OnCurrentRollIndexChanged(int currentRollIndex)
         {
             CurrentRollIndexChanged?.Invoke(this, currentRollIndex);
         }
-
-
 
         protected void OnScoreChanged(int score)
         {
