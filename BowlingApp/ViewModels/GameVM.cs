@@ -25,55 +25,10 @@ namespace BowlingApp
 
         }
 
+        #region Properties and Variables
         private Game game;
 
-        #region Commands
-        private ICommand _RollCommand;
-        public ICommand RollCommand
-        {
-            get
-            {
-                return _RollCommand ?? (_RollCommand = new CommandHandler(() => Roll(), () => !IsGameOver));
-            }
-        }
-
-        private ICommand _ResetCommand;
-        public ICommand ResetCommand
-        {
-            get
-            {
-                return _ResetCommand ?? (_ResetCommand = new CommandHandler(() => Reset(), () => true));
-            }
-        }
-        #endregion
-
-
-        public void LoadRolls(int[] rolls)
-        {
-            game.Reset();
-            game.RollMany(rolls);
-        }
-
-        public void Reset()
-        {
-            game.Reset();
-        }
-
-
-        public void Roll()
-        {
-            game.Roll();
-        }
-
-        public void Roll(int roll)
-        {
-            game.Roll(roll);
-        }
-
-        public int GetScoreByFrameIndex(int frameIndex)
-        {
-            return game.GetScore(frameIndex);
-        }
+        public BindingList<FrameVM> FrameVMs { get; set; }
 
         public int CurrentRollIndex
         {
@@ -122,7 +77,34 @@ namespace BowlingApp
                 return game.IsGameOver;
             }
         }
+        #endregion
 
+        #region Functions
+        public void Roll()
+        {
+            game.Roll();
+        }
+
+        public void Roll(int roll)
+        {
+            game.Roll(roll);
+        }
+
+        public int GetScoreByFrameIndex(int frameIndex)
+        {
+            return game.GetScore(frameIndex);
+        }
+
+        public void Reset()
+        {
+            game.Reset();
+        }
+
+        public void LoadRolls(int[] rolls)
+        {
+            game.Reset();
+            game.RollMany(rolls);
+        }
 
         public void OnCurrentFrameIndexChanged(object sender, int currentFrameIndex)
         {
@@ -146,14 +128,31 @@ namespace BowlingApp
         {
             RaisePropertyChanged(() => IsGameOver);
         }
+        #endregion
 
+        #region Commands
+        private ICommand _RollCommand;
+        public ICommand RollCommand
+        {
+            get
+            {
+                return _RollCommand ?? (_RollCommand = new CommandHandler(() => Roll(), () => !IsGameOver));
+            }
+        }
 
+        private ICommand _ResetCommand;
+        public ICommand ResetCommand
+        {
+            get
+            {
+                return _ResetCommand ?? (_ResetCommand = new CommandHandler(() => Reset(), () => true));
+            }
+        }
+        #endregion
 
-        public BindingList<FrameVM> FrameVMs { get; set; }
-
-
+        #region Events
         public event EventHandler<int> CurrentRollIndexChanged;
         public event EventHandler<int> CurrentFrameIndexChanged;
-
+        #endregion
     }
 }

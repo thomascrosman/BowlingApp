@@ -14,9 +14,6 @@ namespace BowlingApp
 {
     public class FrameVM : ViewModelBase
     {
-        private GameVM GameVM { get; set; }
-        public Frame Frame { get; set; }
-
         public FrameVM(GameVM gameVM, Frame frame)
         {
             GameVM = gameVM;
@@ -25,51 +22,103 @@ namespace BowlingApp
             GameVM.CurrentFrameIndexChanged += OnCurrentFrameIndexChanged;
         }
 
+        #region Properties and Variables
+        private GameVM GameVM { get; set; }
+        public Frame Frame { get; set; }
+
         public BindingList<int> FirstThrowPossibleValues { get; set; } = new BindingList<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-
-        private bool _ScoreSlot1Active;
-        public bool ScoreSlot1Active
+        public bool IsActiveFrame
         {
             get
             {
-                return _ScoreSlot1Active;
-            }
-            set
-            {
-                _ScoreSlot1Active = value;
-                RaisePropertyChanged(() => ScoreSlot1Active);
+                if (GameVM.CurrentFrameIndex == FrameIndex)
+                {
+                    return true;
+                }
+                return false;
             }
         }
 
-        private bool _ScoreSlot2Active;
-        public bool ScoreSlot2Active
+
+
+        public int FrameNumber
         {
             get
             {
-                return _ScoreSlot2Active;
-            }
-            set
-            {
-                _ScoreSlot2Active = value;
-                RaisePropertyChanged(() => ScoreSlot2Active);
+                return FrameIndex + 1;
             }
         }
 
-        private bool _ScoreSlot3Active;
-        public bool ScoreSlot3Active
+
+        public int FrameIndex
         {
             get
             {
-                return _ScoreSlot3Active;
-            }
-            set
-            {
-                _ScoreSlot3Active = value;
-                RaisePropertyChanged(() => ScoreSlot3Active);
+
+                return GameVM.FrameVMs.IndexOf(this);
             }
         }
 
+
+        private string _ScoreSlot1;
+        public string ScoreSlot1
+        {
+            get
+            {
+                return _ScoreSlot1;
+            }
+            set
+            {
+                _ScoreSlot1 = value;
+                RaisePropertyChanged(() => ScoreSlot1);
+            }
+        }
+
+        private string _ScoreSlot2;
+        public string ScoreSlot2
+        {
+            get
+            {
+                return _ScoreSlot2;
+            }
+            set
+            {
+                _ScoreSlot2 = value;
+                RaisePropertyChanged(() => ScoreSlot2);
+            }
+        }
+
+        private string _ScoreSlot3;
+        public string ScoreSlot3
+        {
+            get
+            {
+                return _ScoreSlot3;
+            }
+            set
+            {
+                _ScoreSlot3 = value;
+                RaisePropertyChanged(() => ScoreSlot3);
+            }
+        }
+
+        private string _ScoreSlotTotal;
+        public string ScoreSlotTotal
+        {
+            get
+            {
+                return _ScoreSlotTotal;
+            }
+            set
+            {
+                _ScoreSlotTotal = value;
+                RaisePropertyChanged(() => ScoreSlotTotal);
+            }
+        }
+        #endregion
+
+        #region Functions
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndexChanged)
         {
             if (GameVM.CurrentFrameIndex >= FrameIndex)
@@ -78,10 +127,6 @@ namespace BowlingApp
 
                 if (rollCount == 0)
                 {
-                    ScoreSlot1Active = true;
-                    ScoreSlot2Active = false;
-                    ScoreSlot3Active = false;
-
                     ScoreSlot1 = "";
                     ScoreSlot2 = "";
                     ScoreSlot3 = "";
@@ -98,7 +143,7 @@ namespace BowlingApp
                     if (rollCount > 0)
                     {
                         firstRoll = GameVM.Rolls[Frame.RollIndexes[0]];
-                    }                 
+                    }
 
                     if (rollCount > 1)
                     {
@@ -218,7 +263,7 @@ namespace BowlingApp
                 ScoreSlot3 = "";
             }
 
-            if(GameVM.CurrentFrameIndex >= FrameIndex)
+            if (GameVM.CurrentFrameIndex >= FrameIndex)
             {
                 ScoreSlotTotal = GameVM.GetScoreByFrameIndex(FrameIndex).ToString();
             }
@@ -228,116 +273,22 @@ namespace BowlingApp
             }
         }
 
-
         private void OnCurrentFrameIndexChanged(object sender, int currentFrameIndexChanged)
         {
             RaisePropertyChanged(() => IsActiveFrame);
-        }
-
-        private ICommand _SetRollCommand;
-        public ICommand SetRollCommand
-        {
-            get
-            {
-                return _SetRollCommand ?? (_SetRollCommand = new CommandHandler(() => SetRoll(), () => IsActiveFrame));
-            }
-        }
+        }       
+        #endregion
 
 
 
-        public void SetRoll()
-        {
 
-        }
 
-        public bool IsActiveFrame
-        {
-            get
-            {
-                if(GameVM.CurrentFrameIndex == FrameIndex)
-                {
-                    return true;
-                }
-                return false;
-            }
-        }
+       
 
 
 
-        public int FrameNumber
-        {
-            get
-            {
-                return FrameIndex + 1;
-            }
-        }
 
 
-        public int FrameIndex
-        {
-            get
-            {
-
-                return GameVM.FrameVMs.IndexOf(this);
-            }
-        }
-
-
-        private string _ScoreSlot1;
-        public string ScoreSlot1
-        {
-            get
-            {
-                return _ScoreSlot1;
-            }
-            set
-            {
-                _ScoreSlot1 = value;
-                RaisePropertyChanged(() => ScoreSlot1);
-            }
-        }
-
-        private string _ScoreSlot2;
-        public string ScoreSlot2
-        {
-            get
-            {
-                return _ScoreSlot2;
-            }
-            set
-            {
-                _ScoreSlot2 = value;
-                RaisePropertyChanged(() => ScoreSlot2);
-            }
-        }
-
-        private string _ScoreSlot3;
-        public string ScoreSlot3
-        {
-            get
-            {
-                return _ScoreSlot3;
-            }
-            set
-            {
-                _ScoreSlot3 = value;
-                RaisePropertyChanged(() => ScoreSlot3);
-            }
-        }
-
-        private string _ScoreSlotTotal;
-        public string ScoreSlotTotal
-        {
-            get
-            {
-                return _ScoreSlotTotal;
-            }
-            set
-            {
-                _ScoreSlotTotal = value;
-                RaisePropertyChanged(() => ScoreSlotTotal);
-            }
-        }
 
 
 
