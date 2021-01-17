@@ -7,7 +7,13 @@
              mc:Ignorable="d" DataContext="Game"
              d:DesignHeight="100" d:DesignWidth="920" Width="Auto" Height="Auto">
     <StackPanel>
-        <Button Command="{Binding RollCommand}">Roll</Button>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <Button Command="{Binding RollCommand}">Next Roll</Button>
+            <ComboBox ItemsSource="{Binding Path=PossibleNextThrowValues}" SelectedValue="{Binding Path=NextThrowValue}" />
+        </StackPanel>
+        
+        
+
         <Button Command="{Binding ResetCommand}">Reset</Button>
         <Button Click="showLoadRollsDialog_Click">Load Rolls</Button>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

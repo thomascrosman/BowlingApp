@@ -13,16 +13,16 @@ namespace BowlingApp.Models
         public Frame()
         {
             RollIndexes = new ObservableCollection<int>();
-            RollIndexes.CollectionChanged += OnRollIndexesChanged;
+            //RollIndexes.CollectionChanged += OnRollIndexesChanged;
         }
 
         public ObservableCollection<int> RollIndexes { get; set; }
-        public List<int> Rolls { get; }
+        //public List<int> Rolls { get; }
 
-        private void OnRollIndexesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
+        //private void OnRollIndexesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        //{
             
-        }
+        //}
 
 
     }

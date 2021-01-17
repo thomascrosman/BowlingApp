@@ -1,6 +1,7 @@
 ﻿using BowlingApp.Models;
 using GalaSoft.MvvmLight;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -77,6 +78,42 @@ namespace BowlingApp
                 return game.IsGameOver;
             }
         }
+
+        public Frame CurrentFrame
+        {
+            get
+            {
+                return game.Frames[CurrentFrameIndex];
+            }
+        }
+
+        public ObservableCollection<int> PossibleNextThrowValues
+        {
+            get
+            {
+                ObservableCollection<int> possibleNextThrowValues = new ObservableCollection<int>();
+                possibleNextThrowValues.Add(0);
+                possibleNextThrowValues.Add(1);
+                possibleNextThrowValues.Add(2);
+                possibleNextThrowValues.Add(3);
+
+                return possibleNextThrowValues;
+            }
+        }
+
+        private int _NextThrowValue;
+        public int NextThrowValue
+        {
+            get
+            {
+                return _NextThrowValue;
+            }
+            set
+            {
+                _NextThrowValue = value;
+                RaisePropertyChanged(() => NextThrowValue);
+            }
+        }
         #endregion
 
         #region Functions
@@ -110,6 +147,7 @@ namespace BowlingApp
         {
             RaisePropertyChanged(() => CurrentFrameIndex);
             CurrentFrameIndexChanged?.Invoke(this, currentFrameIndex);
+            RaisePropertyChanged(() => CurrentFrame);
         }
 
         private void OnCurrentRollIndexChanged(object sender, int currentRollIndex)
