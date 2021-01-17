@@ -25,10 +25,5 @@ namespace BowlingApp
         {
             InitializeComponent();
         }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MessageBox.Show("Changed to " + FirstThrowCB.SelectedIndex + 1);
-        }
     }
 }

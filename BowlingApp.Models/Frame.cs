@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +12,18 @@ namespace BowlingApp.Models
     {
         public Frame()
         {
-            RollIndexes = new List<int>();
+            RollIndexes = new ObservableCollection<int>();
+            RollIndexes.CollectionChanged += OnRollIndexesChanged;
         }
 
-        public List<int> RollIndexes { get; set; } 
+        public ObservableCollection<int> RollIndexes { get; set; }
+        public List<int> Rolls { get; }
+
+        private void OnRollIndexesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            
+        }
+
+
     }
 }
