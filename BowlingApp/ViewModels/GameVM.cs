@@ -143,6 +143,11 @@ namespace BowlingApp
         }
         #endregion
 
+        #region Events
+        public event EventHandler<int> CurrentRollIndexChanged;
+        public event EventHandler<int> CurrentFrameIndexChanged;
+        #endregion
+
         #region Commands
         private ICommand _RollRandomizeCommand;
         public ICommand RollRandomizeCommand
@@ -167,7 +172,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll1Command ?? (_Roll1Command = new CommandHandler(() => Roll(1), () => (!IsGameOver && game.NextRollMaximum > 1)));
+                return _Roll1Command ?? (_Roll1Command = new CommandHandler(() => Roll(1), () => (!IsGameOver && game.NextRollMaximum >= 1)));
             }
         }
 
@@ -176,7 +181,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll2Command ?? (_Roll2Command = new CommandHandler(() => Roll(2), () => (!IsGameOver && game.NextRollMaximum > 2)));
+                return _Roll2Command ?? (_Roll2Command = new CommandHandler(() => Roll(2), () => (!IsGameOver && game.NextRollMaximum >= 2)));
             }
         }
 
@@ -185,7 +190,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll3Command ?? (_Roll3Command = new CommandHandler(() => Roll(3), () => (!IsGameOver && game.NextRollMaximum > 3)));
+                return _Roll3Command ?? (_Roll3Command = new CommandHandler(() => Roll(3), () => (!IsGameOver && game.NextRollMaximum >= 3)));
             }
         }
 
@@ -194,7 +199,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll4Command ?? (_Roll4Command = new CommandHandler(() => Roll(4), () => (!IsGameOver && game.NextRollMaximum > 4)));
+                return _Roll4Command ?? (_Roll4Command = new CommandHandler(() => Roll(4), () => (!IsGameOver && game.NextRollMaximum >= 4)));
             }
         }
 
@@ -203,7 +208,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll5Command ?? (_Roll5Command = new CommandHandler(() => Roll(5), () => (!IsGameOver && game.NextRollMaximum > 5)));
+                return _Roll5Command ?? (_Roll5Command = new CommandHandler(() => Roll(5), () => (!IsGameOver && game.NextRollMaximum >= 5)));
             }
         }
 
@@ -212,7 +217,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll6Command ?? (_Roll6Command = new CommandHandler(() => Roll(6), () => (!IsGameOver && game.NextRollMaximum > 6)));
+                return _Roll6Command ?? (_Roll6Command = new CommandHandler(() => Roll(6), () => (!IsGameOver && game.NextRollMaximum >= 6)));
             }
         }
 
@@ -221,7 +226,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll7Command ?? (_Roll7Command = new CommandHandler(() => Roll(7), () => (!IsGameOver && game.NextRollMaximum > 7)));
+                return _Roll7Command ?? (_Roll7Command = new CommandHandler(() => Roll(7), () => (!IsGameOver && game.NextRollMaximum >= 7)));
             }
         }
 
@@ -230,7 +235,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll8Command ?? (_Roll8Command = new CommandHandler(() => Roll(8), () => (!IsGameOver && game.NextRollMaximum > 8)));
+                return _Roll8Command ?? (_Roll8Command = new CommandHandler(() => Roll(8), () => (!IsGameOver && game.NextRollMaximum >= 8)));
             }
         }
 
@@ -239,7 +244,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll9Command ?? (_Roll9Command = new CommandHandler(() => Roll(9), () => (!IsGameOver && game.NextRollMaximum > 9)));
+                return _Roll9Command ?? (_Roll9Command = new CommandHandler(() => Roll(9), () => (!IsGameOver && game.NextRollMaximum >= 9)));
             }
         }
 
@@ -260,11 +265,6 @@ namespace BowlingApp
                 return _ResetCommand ?? (_ResetCommand = new CommandHandler(() => Reset(), () => true));
             }
         }
-        #endregion
-
-        #region Events
-        public event EventHandler<int> CurrentRollIndexChanged;
-        public event EventHandler<int> CurrentFrameIndexChanged;
         #endregion
     }
 }

@@ -101,7 +101,7 @@ namespace BowlingApp.Models
                     else
                     {
                         int firstRoll = Rolls[currentFrame.RollIndexes[0]];
-                        return 11 - firstRoll;
+                        return 10 - firstRoll;
                     }
                 }
             }
