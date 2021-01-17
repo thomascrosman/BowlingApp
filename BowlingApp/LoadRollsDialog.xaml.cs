@@ -30,6 +30,11 @@ namespace BowlingApp
 			this.DialogResult = true;
 		}
 
+		private void btnDialogCancel_Click(object sender, RoutedEventArgs e)
+		{
+			this.DialogResult = false;
+		}
+
 		private void Window_ContentRendered(object sender, EventArgs e)
 		{
 			tbRolls.Focus();

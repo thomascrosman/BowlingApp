@@ -8,22 +8,20 @@
              d:DesignHeight="100" d:DesignWidth="920" Width="Auto" Height="Auto">
     <StackPanel>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-            <Button Margin="5" Command="{Binding RollRandomizeCommand}" CommandParameter="Randomize">Randomize</Button>
-            <Button Margin="5" Command="{Binding Roll0Command}">0</Button>
-            <Button Margin="5" Command="{Binding Roll1Command}">1</Button>
-            <Button Margin="5" Command="{Binding Roll2Command}">2</Button>
-            <Button Margin="5" Command="{Binding Roll3Command}">3</Button>
-            <Button Margin="5" Command="{Binding Roll4Command}">4</Button>
-            <Button Margin="5" Command="{Binding Roll5Command}">5</Button>
-            <Button Margin="5" Command="{Binding Roll6Command}">6</Button>
-            <Button Margin="5" Command="{Binding Roll7Command}">7</Button>
-            <Button Margin="5" Command="{Binding Roll8Command}">8</Button>
-            <Button Margin="5" Command="{Binding Roll9Command}">9</Button>
-            <Button Margin="5" Command="{Binding Roll10Command}">10</Button>
+            <Button Margin="5"  Command="{Binding RollRandomizeCommand}" CommandParameter="Randomize">Randomize</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll0Command}">0</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll1Command}">1</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll2Command}">2</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll3Command}">3</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll4Command}">4</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll5Command}">5</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll6Command}">6</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll7Command}">7</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll8Command}">8</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll9Command}">9</Button>
+            <Button Margin="5" Width="40px" Command="{Binding Roll10Command}">10</Button>
         </StackPanel>
             
-        <Button Command="{Binding ResetCommand}">Reset</Button>
-        <Button Click="showLoadRollsDialog_Click">Load Rolls</Button>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <ItemsControl HorizontalAlignment="Center" ItemsSource="{Binding FrameVMs}">
                 <ItemsControl.ItemTemplate>
@@ -66,6 +64,12 @@
                     <TextBlock Grid.Row="1" FontWeight="Bold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="{Binding Score}"></TextBlock>
                 </Grid>
             </Border>
+
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button Margin="5" HorizontalAlignment="Left" Click="showLoadRollsDialog_Click">Load/Edit Rolls</Button>
+            <Button Margin="5" HorizontalAlignment="Right" Command="{Binding ResetCommand}">Reset</Button>
 
         </StackPanel>
 
