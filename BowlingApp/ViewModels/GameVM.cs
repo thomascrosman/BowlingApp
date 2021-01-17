@@ -86,21 +86,6 @@ namespace BowlingApp
                 return game.Frames[CurrentFrameIndex];
             }
         }
-
-
-        private int _NextThrowMax = 5;
-        public int NextThrowMax
-        {
-            get
-            {
-                return _NextThrowMax;
-            }
-            set
-            {
-                _NextThrowMax = value;
-                RaisePropertyChanged(() => NextThrowMax);
-            }
-        }
         #endregion
 
         #region Functions
@@ -108,15 +93,14 @@ namespace BowlingApp
         {
             if(arg == null)
             {
-                game.Roll();
+                Random rnd = new Random();
+                game.Roll(rnd.Next(0, game.NextRollMaximum + 1));
             }
             else
             {
                 game.Roll(arg.Value);
             }
         }
-
-
 
         public int GetScoreByFrameIndex(int frameIndex)
         {
@@ -183,7 +167,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll1Command ?? (_Roll1Command = new CommandHandler(() => Roll(1), () => !IsGameOver));
+                return _Roll1Command ?? (_Roll1Command = new CommandHandler(() => Roll(1), () => (!IsGameOver && game.NextRollMaximum > 1)));
             }
         }
 
@@ -192,7 +176,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll2Command ?? (_Roll2Command = new CommandHandler(() => Roll(2), () => !IsGameOver));
+                return _Roll2Command ?? (_Roll2Command = new CommandHandler(() => Roll(2), () => (!IsGameOver && game.NextRollMaximum > 2)));
             }
         }
 
@@ -201,7 +185,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll3Command ?? (_Roll3Command = new CommandHandler(() => Roll(3), () => !IsGameOver));
+                return _Roll3Command ?? (_Roll3Command = new CommandHandler(() => Roll(3), () => (!IsGameOver && game.NextRollMaximum > 3)));
             }
         }
 
@@ -210,7 +194,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll4Command ?? (_Roll4Command = new CommandHandler(() => Roll(4), () => !IsGameOver));
+                return _Roll4Command ?? (_Roll4Command = new CommandHandler(() => Roll(4), () => (!IsGameOver && game.NextRollMaximum > 4)));
             }
         }
 
@@ -219,7 +203,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll5Command ?? (_Roll5Command = new CommandHandler(() => Roll(5), () => !IsGameOver));
+                return _Roll5Command ?? (_Roll5Command = new CommandHandler(() => Roll(5), () => (!IsGameOver && game.NextRollMaximum > 5)));
             }
         }
 
@@ -228,7 +212,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll6Command ?? (_Roll6Command = new CommandHandler(() => Roll(6), () => !IsGameOver));
+                return _Roll6Command ?? (_Roll6Command = new CommandHandler(() => Roll(6), () => (!IsGameOver && game.NextRollMaximum > 6)));
             }
         }
 
@@ -237,7 +221,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll7Command ?? (_Roll7Command = new CommandHandler(() => Roll(7), () => !IsGameOver));
+                return _Roll7Command ?? (_Roll7Command = new CommandHandler(() => Roll(7), () => (!IsGameOver && game.NextRollMaximum > 7)));
             }
         }
 
@@ -246,7 +230,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll8Command ?? (_Roll8Command = new CommandHandler(() => Roll(8), () => !IsGameOver));
+                return _Roll8Command ?? (_Roll8Command = new CommandHandler(() => Roll(8), () => (!IsGameOver && game.NextRollMaximum > 8)));
             }
         }
 
@@ -255,7 +239,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll9Command ?? (_Roll9Command = new CommandHandler(() => Roll(9), () => !IsGameOver));
+                return _Roll9Command ?? (_Roll9Command = new CommandHandler(() => Roll(9), () => (!IsGameOver && game.NextRollMaximum > 9)));
             }
         }
 
@@ -264,7 +248,7 @@ namespace BowlingApp
         {
             get
             {
-                return _Roll10Command ?? (_Roll10Command = new CommandHandler(() => Roll(10), () => !IsGameOver));
+                return _Roll10Command ?? (_Roll10Command = new CommandHandler(() => Roll(10), () => (!IsGameOver && game.NextRollMaximum >= 10)));
             }
         }
 

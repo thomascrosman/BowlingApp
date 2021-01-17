@@ -119,20 +119,6 @@ namespace BowlingApp.Models
             IsGameOver = false;
         }
 
-        public void Roll()
-        {
-            Random rnd = new Random();
-            Roll(rnd.Next(0, NextRollMaximum + 1));     
-        }
-
-        public void RollMany(int[] pinArray)
-        {
-            for (int i = 0; i < pinArray.Length; i++)
-            {
-                Roll(pinArray[i]);
-            }
-        }
-
         public void Roll(int pins)
         {
             if (IsGameOver == false)
@@ -145,6 +131,16 @@ namespace BowlingApp.Models
                 IsGameOver = GetIsGameOver();
             }
         }
+
+        public void RollMany(int[] pinArray)
+        {
+            for (int i = 0; i < pinArray.Length; i++)
+            {
+                Roll(pinArray[i]);
+            }
+        }
+
+
 
         public bool GetIsGameOver()
         {
@@ -251,10 +247,6 @@ namespace BowlingApp.Models
             IsGameOverChanged?.Invoke(this, isGameOver);
         }
 
-        public void EditFrame(int frameIndex, Frame frame)
-        {
-
-        }
 
         #endregion
 
