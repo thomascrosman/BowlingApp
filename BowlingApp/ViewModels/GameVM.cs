@@ -87,47 +87,32 @@ namespace BowlingApp
             }
         }
 
-        public ObservableCollection<int> PossibleNextThrowValues
+
+        private int _NextThrowMax = 5;
+        public int NextThrowMax
         {
             get
             {
-                ObservableCollection<int> possibleNextThrowValues = new ObservableCollection<int>();
-                possibleNextThrowValues.Add(0);
-                possibleNextThrowValues.Add(1);
-                possibleNextThrowValues.Add(2);
-                possibleNextThrowValues.Add(3);
-
-                return possibleNextThrowValues;
-            }
-        }
-
-        private int _NextThrowValue;
-        public int NextThrowValue
-        {
-            get
-            {
-                return _NextThrowValue;
+                return _NextThrowMax;
             }
             set
             {
-                _NextThrowValue = value;
-                RaisePropertyChanged(() => NextThrowValue);
+                _NextThrowMax = value;
+                RaisePropertyChanged(() => NextThrowMax);
             }
         }
         #endregion
 
         #region Functions
-        public void Roll(object arg)
+        public void Roll(int? arg = null)
         {
-            string str = (string)arg;
-            if(str == "Randomize")
+            if(arg == null)
             {
                 game.Roll();
             }
             else
             {
-                int roll = Int32.Parse(str);
-                game.Roll(roll);
+                game.Roll(arg.Value);
             }
         }
 
@@ -175,12 +160,111 @@ namespace BowlingApp
         #endregion
 
         #region Commands
-        private ICommand _RollCommand;
-        public ICommand RollCommand
+        private ICommand _RollRandomizeCommand;
+        public ICommand RollRandomizeCommand
         {
             get
             {
-                return _RollCommand ?? (_RollCommand = new CommandHandler((arg) => Roll(arg), () => !IsGameOver));
+                return _RollRandomizeCommand ?? (_RollRandomizeCommand = new CommandHandler(() => Roll(), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll0Command;
+        public ICommand Roll0Command
+        {
+            get
+            {
+                return _Roll0Command ?? (_Roll0Command = new CommandHandler(() => Roll(0), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll1Command;
+        public ICommand Roll1Command
+        {
+            get
+            {
+                return _Roll1Command ?? (_Roll1Command = new CommandHandler(() => Roll(1), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll2Command;
+        public ICommand Roll2Command
+        {
+            get
+            {
+                return _Roll2Command ?? (_Roll2Command = new CommandHandler(() => Roll(2), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll3Command;
+        public ICommand Roll3Command
+        {
+            get
+            {
+                return _Roll3Command ?? (_Roll3Command = new CommandHandler(() => Roll(3), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll4Command;
+        public ICommand Roll4Command
+        {
+            get
+            {
+                return _Roll4Command ?? (_Roll4Command = new CommandHandler(() => Roll(4), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll5Command;
+        public ICommand Roll5Command
+        {
+            get
+            {
+                return _Roll5Command ?? (_Roll5Command = new CommandHandler(() => Roll(5), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll6Command;
+        public ICommand Roll6Command
+        {
+            get
+            {
+                return _Roll6Command ?? (_Roll6Command = new CommandHandler(() => Roll(6), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll7Command;
+        public ICommand Roll7Command
+        {
+            get
+            {
+                return _Roll7Command ?? (_Roll7Command = new CommandHandler(() => Roll(7), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll8Command;
+        public ICommand Roll8Command
+        {
+            get
+            {
+                return _Roll8Command ?? (_Roll8Command = new CommandHandler(() => Roll(8), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll9Command;
+        public ICommand Roll9Command
+        {
+            get
+            {
+                return _Roll9Command ?? (_Roll9Command = new CommandHandler(() => Roll(9), () => !IsGameOver));
+            }
+        }
+
+        private ICommand _Roll10Command;
+        public ICommand Roll10Command
+        {
+            get
+            {
+                return _Roll10Command ?? (_Roll10Command = new CommandHandler(() => Roll(10), () => !IsGameOver));
             }
         }
 
@@ -189,7 +273,7 @@ namespace BowlingApp
         {
             get
             {
-                return _ResetCommand ?? (_ResetCommand = new CommandHandler((arg) => Reset(), () => true));
+                return _ResetCommand ?? (_ResetCommand = new CommandHandler(() => Reset(), () => true));
             }
         }
         #endregion
